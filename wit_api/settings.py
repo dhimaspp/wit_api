@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'wit_api',
     'users_csiswa',
     'rest_framework.authtoken'
+    'djoser'
 ]
 
 MIDDLEWARE = [
@@ -73,14 +74,6 @@ TEMPLATES = [
     },
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
-}
 
 WSGI_APPLICATION = 'wit_api.wsgi.application'
 
@@ -100,6 +93,35 @@ DATABASES = {
     }
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
+
+AUTH_USER_MODEL = [
+    'users_csiswa.DataCSiswa',
+    'django.contrib.auth.models.User' 
+    ]
+
+Djoser = {
+    'LOGIN_FIELD': 'email'
+    'SERIALIZERS': {
+        'user_create': [
+            'users_csiswa.serializers.DataCSiswaSerializers',
+            'users_csiswa.serializers.AdminSerializers'
+            ], 
+        'user': [
+            'users_csiswa.serializers.DataCSiswaSerializers',
+            'users_csiswa.serializers.AdminSerializers'
+            ], 
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

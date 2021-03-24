@@ -5,8 +5,10 @@ from django.urls import path
 
 app_name = 'wit_api'
 urlpatterns = [
-    path('usercsiswa/', UserCsiswaView.as_view(), name='usercsiswa'),
-    path('admin/', AdminView.as_view(), name='admin')
+    path('', include('djoser.urls')),
+    path('', include('djoser.urls.authtoken')),
+    path('jurusan/(?P<pk>\d+)/$', JurusanViewSets.as_view()),
+    path('jurusan/', JurusanListViews.as_view()),
 ]
 
 # urlpatterns = [

@@ -21,7 +21,7 @@ from django.conf.urls import url, include
 from rest_framework.authtoken import views
 
 urlpatterns = [
-    path('wit_api/', include('users_csiswa.urls', namespace='wit_api')),
+    path('wit-api/', include('users_csiswa.urls', namespace='wit_api')),
     path('api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
     path('admin/', admin.site.urls),
 ]
