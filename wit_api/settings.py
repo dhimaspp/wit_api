@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'wit_api',
     'users_csiswa',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
     'djoser'
 ]
 
@@ -111,10 +111,10 @@ AUTH_USER_MODEL = [
 
 Djoser = {
     'LOGIN_FIELD': 'email'
-    # 'SERIALIZERS': {
-    #     'user_create': 'users_csiswa.serial.DataCSiswaCreateSerializers',
-    #     'user': 'users_csiswa.serializers.DataCSiswaSerializers',           
-    # }
+    'SERIALIZERS': {
+        'user_create': 'users_csiswa.serial.DataCSiswaCreateSerializers',
+        'user': 'users_csiswa.serializers.DataCSiswaSerializers',           
+    }
 }
 
 # Password validation
