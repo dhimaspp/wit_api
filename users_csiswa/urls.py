@@ -7,8 +7,9 @@ app_name = 'wit_api'
 urlpatterns = [
     path('', include('djoser.urls')),
     path('', include('djoser.urls.authtoken')),
-    path('jurusan/(?P<pk>\d+)/$', JurusanViewSets.as_view()),
+    path('jurusan/<int:pk>/', JurusanViewSets.as_view()),
     path('jurusan/', JurusanListViews.as_view()),
+    # path('datacsiswa/(?P<pk>\d+)/$', DataCSiswaListViews.as_view()),
 ]
 
 # urlpatterns = [

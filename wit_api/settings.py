@@ -104,17 +104,15 @@ REST_FRAMEWORK = {
     ],
 }
 
-AUTH_USER_MODEL = [
-    'users_csiswa.DataCSiswa',
-    'django.contrib.auth.models.User' 
-    ]
+AUTH_USER_MODEL = 'users_csiswa.User'
+# # 'django.contrib.auth.models.User'
 
 Djoser = {
-    'LOGIN_FIELD': 'email'
-    # 'SERIALIZERS': {
-    #     'user_create': 'users_csiswa.serial.DataCSiswaCreateSerializers',
-    #     'user': 'users_csiswa.serializers.DataCSiswaSerializers',           
-    # }
+    'LOGIN_FIELD': 'email',
+    'SERIALIZERS': {
+        'user_create': 'users_csiswa.serializers.UserCreateSerializers',
+        'user': 'users_csiswa.serializers.UserCreateSerializers',
+    }
 }
 
 # Password validation

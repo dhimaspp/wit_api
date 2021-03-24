@@ -10,14 +10,16 @@ from rest_framework import status
 
 
 # class DataCSiswaListViews(generics.ListCreateAPIView):
+#     permission_classes = [IsAuthenticated]
 #     queryset = DataCSiswa.objects.all()
 #     serializer_class = DataCSiswaSerializers
-    
+
 
 class JurusanViewSets(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = JurusanSerializers
     queryset = Jurusan.objects.all()
+
 
 class JurusanListViews(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
@@ -55,7 +57,7 @@ class JurusanListViews(generics.ListCreateAPIView):
 #         users = User.objects.all()
 #         serializer = AdminSerializers(users, many=True)
 #         return Response(serializer.data)
-        
+
 #     def post(self, request):
 #         self.http_method_names.append("GET")
 #         serializer = AdminSerializers(data=request.data)
@@ -78,16 +80,11 @@ class JurusanListViews(generics.ListCreateAPIView):
 #     queryset = UsersCSiswa.objects.all()
 
 
-
 # class AdminListView(generics.ListAPIView):
 #     queryset = User.objects.all()
 #     serializer_class = AdminSerializers
 
 
-
 # class JurusanViewSets(generics.RetrieveUpdateDestroyAPIView):
 #     perhitungan_jurusan = Jurusan.objects.annotate(Count('siswa_pemilih'))
 #     jurusan_terpilih = Jurusan.objects.
-
-
-
