@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import django_heroku
 import os
-# import dj_database_url
+import dj_database_url
 # import dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,10 +28,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'mhp)xtn+ii0!_2144c9b^mi3*xu9$vqi3t*r&edoea&258-1v!'
-
+# SECRET_KEY = 'mhp)xtn+ii0!_2144c9b^mi3*xu9$vqi3t*r&edoea&258-1v!'
+SECRET_KEY = os.environ.get('SECRET_KEY')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -125,18 +127,19 @@ WSGI_APPLICATION = 'wit_api.wsgi.application'
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
-
-DATABASES = {
-    'default': {
-        # MySQL engine. Powered by the mysqlclient module.
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'wita',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
+# DATABASES = {
+#     'default': {
+#         # MySQL engine. Powered by the mysqlclient module.
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'wita',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -196,19 +199,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+# PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = '/static/'
 # MEDIA_ROOT =  '/media/'
 MEDIA_URL = '/media/'
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # STATIC_URL = '/staticfiles/'
 # STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # MEDIA_URL = "/mediafiles/"
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, "media/")
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
-# MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+# MEDIA_ROOT = os.path.join(PROJECT_ROOT, "media/")
+# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'project_name/static')]
 
 django_heroku.settings(locals())
 # del DATABASES['default']['OPTIONS']['sslmode']
