@@ -80,18 +80,53 @@ WSGI_APPLICATION = 'wit_api.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+# urlparse.uses_netloc.append('mysql')
 
+# try:
+
+#     # Check to make sure DATABASES is set in settings.py file.
+#     # If not default to {}
+
+#     if 'DATABASES' not in locals():
+#         DATABASES = {}
+
+#     if 'DATABASE_URL' in os.environ:
+#         url = urlparse.urlparse(os.environ['DATABASE_URL'])
+
+#         # Ensure default database exists.
+#         DATABASES['default'] = DATABASES.get('default', {})
+
+#         # Update with environment configuration.
+#         DATABASES['default'].update({
+#             'NAME': url.path[1:],
+#             'USER': url.username,
+#             'PASSWORD': url.password,
+#             'HOST': url.hostname,
+#             'PORT': url.port,
+#         })
+
+#         if url.scheme == 'mysql':
+#             DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
+# except Exception:
+#     print 'Unexpected error:', sys.exc_info()
 DATABASES = {
     'default': {
-        # MySQL engine. Powered by the mysqlclient module.
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'wit',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         # MySQL engine. Powered by the mysqlclient module.
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'wit',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
