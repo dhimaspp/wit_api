@@ -112,11 +112,8 @@ AUTH_USER_MODEL = [
 Djoser = {
     'LOGIN_FIELD': 'email'
     'SERIALIZERS': {
-        'user_create': 
-            'users_csiswa.serializers.DataCSiswaSerializers',
-           
-        'user': 
-            'users_csiswa.serializers.DataCSiswaSerializers',           
+        'user_create': 'users_csiswa.serializers.DataCSiswaSerializers',
+        'user': 'users_csiswa.serializers.DataCSiswaSerializers',           
     }
 }
 
