@@ -13,8 +13,14 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import django_heroku
 import os
+# import dj_database_url
+# import dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# dotenv_file = os.path.join(BASE_DIR, ".env")
+# if os.path.isfile(dotenv_file):
+#     dotenv.load_dotenv(dotenv_file)
 # BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -48,12 +54,14 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'wit_api.urls'
@@ -109,24 +117,26 @@ WSGI_APPLICATION = 'wit_api.wsgi.application'
 #             DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
 # except Exception:
 #     print 'Unexpected error:', sys.exc_info()
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
+# DATABASES = {}
+# DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 # DATABASES = {
 #     'default': {
-#         # MySQL engine. Powered by the mysqlclient module.
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'wit',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        # MySQL engine. Powered by the mysqlclient module.
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'wita',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -186,14 +196,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = '/static/'
 # MEDIA_ROOT =  '/media/'
 MEDIA_URL = '/media/'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # STATIC_URL = '/staticfiles/'
 # STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # MEDIA_URL = "/mediafiles/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, "media/")
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
+# MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 django_heroku.settings(locals())
+# del DATABASES['default']['OPTIONS']['sslmode']
+# options = DATABASES['default'].get('OPTIONS', {})
+# options.pop('sslmode', None)
